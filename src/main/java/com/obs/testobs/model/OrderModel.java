@@ -22,5 +22,6 @@ public class OrderModel extends AuditTrailModel{
     private int qty;
 
     private int price;
+    private boolean status;
 
 }
