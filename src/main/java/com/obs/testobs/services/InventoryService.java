@@ -75,6 +75,7 @@ public class InventoryService {
             int qtyNew = inventory.getQty() - request.getQty();
             inventory.setQty(qtyNew);
         }
+        inventory.setType(request.getType());
         inventoryRepository.save(inventory);
     }
 
