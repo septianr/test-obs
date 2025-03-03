@@ -3,6 +3,7 @@ package com.obs.testobs.services;
 import com.obs.testobs.DTO.ItemRequestDTO;
 import com.obs.testobs.model.ItemModel;
 import com.obs.testobs.repository.ItemRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,15 +43,18 @@ public class ItemService {
         return itemRepository.findByStatus(true, pageable);
     }
 
+    @Transactional
     public void createItem(ItemRequestDTO request) {
         ItemModel item = new ItemModel();
         item.setTimeCreated(LocalDateTime.now());
         item.setTimeUpdated(LocalDateTime.now());
         item.setName(request.getName());
         item.setPrice(request.getPrice());
+        item.setStatus(true);
         itemRepository.save(item);
     }
 
+    @Transactional
     public void updateItem(ItemRequestDTO request) throws Exception {
 
         Optional<ItemModel> item = itemRepository.findById(Long.valueOf(request.getId()));
