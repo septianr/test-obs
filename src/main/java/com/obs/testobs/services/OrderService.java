@@ -47,10 +47,14 @@ public class OrderService {
     public void createOrder(OrderRequestDTO request) throws Exception {
         OrderModel order = new OrderModel();
         ItemModel getItemById = itemService.getItemById(request.getItemId());
+        InventoryModel getInventory = inventoryService.getItemById(request.getInventoryId());
         order.setTimeCreated(LocalDateTime.now());
         order.setTimeUpdated(LocalDateTime.now());
         order.setOrderNo(generateOrderNo());
-        order.setPrice(request.getPrice());
+        order.setPrice(getItemById.getPrice());
+        if(request.getQty() > getInventory.getQty()){
+            throw new Exception("Stock Inventory Insufficient");
+        }
         order.setQty(request.getQty());
         order.setItemId(getItemById);
         order.setStatus(true);
@@ -84,6 +88,7 @@ public class OrderService {
             throw new Exception("Data Not Found");
         }
         OrderModel order = cekOrder.get();
+        order.setQty(0);
         order.setTimeUpdated(LocalDateTime.now());
         order.setStatus(false);
         orderRepository.save(order);
@@ -94,12 +99,12 @@ public class OrderService {
         int firstIncrement = 1;
         String orderNo = "";
         String cekOrder = orderRepository.findByOrderNo();
-        if(!cekOrder.isEmpty() || !cekOrder.isBlank()) {
+        if(cekOrder != null) {
             int lastNoOrder = Integer.parseInt(cekOrder.substring(1));
             int newNumber = lastNoOrder + 1;
-            orderNo = "o" + newNumber;
+            orderNo = "O" + newNumber;
         } else {
-            orderNo = "O" + firstIncrement++;
+            orderNo = "O" + firstIncrement;
         }
         return orderNo;
     }

@@ -87,6 +87,8 @@ public class InventoryService {
             throw new Exception("Data Not Found");
         }
         InventoryModel inventory = cekInventory.get();
+        inventory.setQty(0);
+        inventory.setType(InventoryConstant.withdrawal);
         inventory.setTimeUpdated(LocalDateTime.now());
         inventory.setStatus(false);
         inventoryRepository.save(inventory);
