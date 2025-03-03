@@ -46,7 +46,7 @@ public class ItemController {
     public ResponseEntity<?> createData(@RequestBody ItemRequestDTO request) {
         try{
             itemService.createItem(request);
-            return ResponseEntity.ok(new ResponseApi("success", request));
+            return ResponseEntity.ok(new ResponseApi("success", 00));
         } catch(Exception e){
             log.error(e.getMessage());
             return ResponseEntity.badRequest().body(new ResponseApi("Failed",

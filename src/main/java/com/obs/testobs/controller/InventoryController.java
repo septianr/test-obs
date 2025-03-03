@@ -36,7 +36,7 @@ public class InventoryController {
     public ResponseEntity<?> createData(@RequestBody InventoryRequestDTO request) {
         try{
             inventoryService.createInventory(request);
-            return ResponseEntity.ok(new ResponseApi("success", request));
+            return ResponseEntity.ok(new ResponseApi("success", 00));
         } catch(Exception e){
             log.error(e.getMessage());
             return ResponseEntity.badRequest().body(new ResponseApi("Failed",
