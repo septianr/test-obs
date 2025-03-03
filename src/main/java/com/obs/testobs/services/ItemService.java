@@ -26,7 +26,7 @@ public class ItemService {
     public ItemModel getItemById(int id) throws Exception {
 
         Optional<ItemModel> result = itemRepository.findById(Long.valueOf(id));
-        if(!result.isPresent()){
+        if(!result.isPresent() || result.get().isStatus() == false){
             throw new Exception("Data Not Found");
         }
         log.info("result {}", result);
@@ -68,6 +68,7 @@ public class ItemService {
         itemRepository.save(itemModel);
     }
 
+    @Transactional
     public void softDeleteItem(ItemRequestDTO request) throws Exception {
 
         Optional<ItemModel> item = itemRepository.findById(Long.valueOf(request.getId()));
