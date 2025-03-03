@@ -1,7 +1,15 @@
 package com.obs.testobs.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "inventory")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class InventoryModel extends AuditTrailModel{
 
     @Id
@@ -9,7 +17,7 @@ public class InventoryModel extends AuditTrailModel{
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "itemId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "item_id", nullable = false)
     private ItemModel itemId;
 
     @Column(nullable = false)
