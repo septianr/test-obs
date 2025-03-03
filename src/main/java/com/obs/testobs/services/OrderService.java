@@ -29,7 +29,7 @@ public class OrderService {
     @Autowired
     private InventoryService inventoryService;
 
-    public OrderModel getItemServiceById(int id) throws Exception {
+    public OrderModel getOrderById(int id) throws Exception {
         Optional<OrderModel> getOrder = orderRepository.findById(Long.valueOf(id));
         if(!getOrder.isPresent() || getOrder.get().isStatus() == false) {
             throw new Exception("Order Not Found");
@@ -38,7 +38,7 @@ public class OrderService {
         return getOrder.get();
     }
 
-    public Page<OrderModel> getItemAll(int page, int size){
+    public Page<OrderModel> getOrderAll(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return orderRepository.findByStatus(true, pageable);
     }
